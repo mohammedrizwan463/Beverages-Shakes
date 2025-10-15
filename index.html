@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Beverages & Shakes</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<style>
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background-color: #fff8f0;
+    color: #333;
+  }
+
+  /* ===== NAVBAR ===== */
+  .navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #fff;
+    padding: 15px 50px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+  }
+
+  .navbar-left {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+  }
+
+  .navbar-left img { width: 45px; cursor: pointer; }
+
+  .navbar-left a {
+    text-decoration: none;
+    color: #222;
+    font-weight: 600;
+    font-size: 16px;
+    letter-spacing: 0.5px;
+    transition: color 0.3s ease;
+  }
+
+  .navbar-left a:hover { color: #006241; }
+
+  .navbar-right { display: flex; align-items: center; gap: 15px; }
+
+  .navbar-right button {
+    padding: 8px 16px;
+    border-radius: 20px;
+    border: 2px solid #000;
+    background: transparent;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .navbar-right button:hover { background-color: #000; color: #fff; }
+  .navbar-right .join { background-color: #000; color: #fff; }
+  .navbar-right .join:hover { background-color: #444; }
+
+  .account-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-weight: 600;
+    color: #3c2a21;
+  }
+
+  .account-info button {
+    border: 2px solid #000;
+    border-radius: 20px;
+    padding: 5px 12px;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .account-info button:hover { background-color: #000; color: #fff; }
+
+  /* ===== HEADER ===== */
+  h1 { text-align: center; font-size: 48px; color: #3c2a21; margin-top: 40px; font-weight: 700; }
+  p { max-width: 1000px; margin: 20px auto; font-style: italic; font-size: 22px; color: #7a3e2b; text-align: center; line-height: 1.7; }
+
+  /* ===== ICONS ===== */
+  .icons { text-align: center; margin: 40px 0; }
+  .icons i { font-size: 36px; margin: 0 15px; color: #d4a373; transition: color 0.3s ease, transform 0.3s ease; cursor: pointer; }
+  .icons i:hover { color: #a35d27; transform: scale(1.2); }
+
+  /* ===== IMAGE SECTION ===== */
+  .image-container { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; margin: 50px auto; padding: 20px; }
+  .image-box { position: relative; overflow: hidden; border-radius: 15px; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); transition: transform 0.4s ease, box-shadow 0.4s ease; }
+  .image-box:hover { transform: scale(1.05); box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3); }
+  .image-box img { width: 420px; height: 280px; object-fit: cover; border-radius: 15px; transition: transform 0.4s ease; }
+  .image-box:hover img { transform: scale(1.1); filter: brightness(85%); }
+  .overlay { position: absolute; bottom: 0; left: 0; right: 0; background: rgba(0, 0, 0, 0.6); color: #fff; font-size: 20px; text-align: center; padding: 10px; opacity: 0; transition: opacity 0.4s ease; }
+  .image-box:hover .overlay { opacity: 1; }
+
+  /* ===== MODAL ===== */
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 10000;
+    left: 0; top: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.5);
+    justify-content: center;
+    align-items: center;
+  }
+
+  .modal-content {
+    background-color: #fff;
+    padding: 30px 40px;
+    border-radius: 20px;
+    width: 360px;
+    text-align: center;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+    position: relative;
+  }
+
+  .modal-content h2 { color: #3c2a21; margin-bottom: 20px; font-size: 26px; }
+  .modal-content .icon { font-size: 50px; color: #d4a373; margin-bottom: 15px; }
+
+  .modal-content input {
+    width: 100%;
+    padding: 12px 15px;
+    margin: 8px 0;
+    border-radius: 10px;
+    border: 1.5px solid #ccc;
+    font-size: 15px;
+    transition: border-color 0.3s ease;
+  }
+
+  .modal-content input:focus { border-color: #a35d27; outline: none; }
+
+  .modal-content button {
+    width: 100%;
+    padding: 12px 0;
+    margin-top: 12px;
+    border-radius: 25px;
+    border: none;
+    background-color: #3c2a21;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+
+  .modal-content button:hover { background-color: #d4a373; transform: scale(1.05); }
+
+  .close {
+    position: absolute;
+    top: 12px; right: 20px;
+    font-size: 28px; font-weight: bold; color: #333;
+    cursor: pointer;
+  }
+
+  /* ===== MAP ===== */
+  #mapModal { display: none; }
+  #map { height: 400px; width: 100%; border-radius: 15px; }
+
+  @media (max-width: 768px) {
+    .navbar { flex-direction: column; padding: 10px 20px; }
+    .navbar-left { flex-wrap: wrap; justify-content: center; gap: 20px; }
+    h1 { font-size: 32px; }
+    p { font-size: 18px; padding: 0 10px; }
+    .image-box img { width: 90%; height: auto; }
+    .modal-content { width: 90%; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="navbar-left">
+    <img src="logo.png" alt="Logo" />
+    <a href="#">MENU</a>
+    <a href="#">REWARDS</a>
+    <a href="#">GIFT CARDS</a>
+  </div>
+  <div class="navbar-right" id="navbar-right">
+    <button onclick="showMapModal()"><i class="fa-solid fa-location-dot"></i> Find a store</button>
+    <button class="sign-in" onclick="showLoginModal()">Sign in</button>
+    <button class="join" onclick="showJoinModal()">Join now</button>
+  </div>
+</nav>
+
+<!-- HEADER -->
+<h1><i class="fa-solid fa-mug-saucer"></i> Beverages & Shakes - Crafted for Every Mood</h1>
+<p>
+Refresh your day with our delicious range of beverages and shakes! From rich, aromatic coffees to cool mocktails and
+fresh fruit juices, every drink is crafted to delight your taste buds. Enjoy thick, creamy milkshakes and healthy
+smoothies made with real fruits and natural ingredients.
+</p>
+
+<!-- ICONS -->
+<div class="icons">
+  <i class="fa-solid fa-mug-hot" title="Hot Coffee" onclick="showLoginModal()"></i>
+  <i class="fa-solid fa-ice-cream" title="Milk Shakes" onclick="showLoginModal()"></i>
+  <i class="fa-solid fa-glass-water" title="Cold Coffee" onclick="showLoginModal()"></i>
+  <i class="fa-solid fa-leaf" title="Tea" onclick="showLoginModal()"></i>
+  <i class="fa-solid fa-bottle-water" title="Refreshers" onclick="showLoginModal()"></i>
+</div>
+
+<!-- IMAGES -->
+<div class="image-container">
+  <a href="drinks.html" class="image-box">
+    <img src="f1.jpg" alt="Drinks" />
+    <div class="overlay">Explore Beverages</div>
+  </a>
+  <a href="food.html" class="image-box">
+    <img src="f2.jpg" alt="Food" />
+    <div class="overlay">Explore Food</div>
+  </a>
+</div>
+
+<!-- LOGIN MODAL -->
+<div id="loginModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal('loginModal')">&times;</span>
+    <div class="icon"><i class="fa-solid fa-user"></i></div>
+    <h2>Sign In</h2>
+    <input type="email" id="loginEmail" placeholder="Enter your email">
+    <input type="password" id="loginPassword" placeholder="Enter your password">
+    <button onclick="loginUser()">Login</button>
+  </div>
+</div>
+
+<!-- JOIN MODAL -->
+<div id="joinModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal('joinModal')">&times;</span>
+    <div class="icon"><i class="fa-solid fa-user-plus"></i></div>
+    <h2>Join Now</h2>
+    <input type="text" id="joinName" placeholder="Enter your name">
+    <input type="email" id="joinEmail" placeholder="Enter your email">
+    <input type="password" id="joinPassword" placeholder="Enter your password">
+    <button onclick="joinUser()">Create Account</button>
+  </div>
+</div>
+
+<!-- MAP MODAL -->
+<div id="mapModal" class="modal">
+  <div class="modal-content" style="width:90%; max-width:800px;">
+    <span class="close" onclick="closeModal('mapModal')">&times;</span>
+    <h2>Our Stores in Hyderabad</h2>
+    <div id="map"></div>
+  </div>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+  const navbarRight = document.getElementById('navbar-right');
+
+  // Load accounts from localStorage
+  let accounts = JSON.parse(localStorage.getItem('accounts')) || [];
+
+  window.onload = () => {
+    const loggedIn = localStorage.getItem('loggedInUser');
+    if(loggedIn) showAccount(loggedIn);
+  }
+
+  function showLoginModal() { document.getElementById('loginModal').style.display = 'flex'; }
+  function showJoinModal() { document.getElementById('joinModal').style.display = 'flex'; }
+  function closeModal(modalId) { document.getElementById(modalId).style.display = 'none'; }
+
+  function joinUser() {
+    const name = document.getElementById('joinName').value.trim();
+    const email = document.getElementById('joinEmail').value.trim();
+    const password = document.getElementById('joinPassword').value.trim();
+
+    if(!name || !email || !password) { alert("Please fill all fields."); return; }
+
+    const exists = accounts.find(a => a.name === name || a.email === email);
+    if(exists) { alert("Account with this name or email already exists."); return; }
+
+    accounts.push({name, email, password});
+    localStorage.setItem('accounts', JSON.stringify(accounts));
+    localStorage.setItem('loggedInUser', name);
+    showAccount(name);
+    closeModal('joinModal');
+    alert("Account created successfully!");
+  }
+
+  function loginUser() {
+    const email = document.getElementById('loginEmail').value.trim();
+    const password = document.getElementById('loginPassword').value.trim();
+
+    const user = accounts.find(a => a.email === email && a.password === password);
+    if(user){
+      localStorage.setItem('loggedInUser', user.name);
+      showAccount(user.name);
+      closeModal('loginModal');
+      alert("Logged in successfully!");
+    } else {
+      alert("Invalid email or password.");
+    }
+  }
+
+  function showAccount(name) {
+    navbarRight.innerHTML = `
+      <div class="account-info">
+        <span>Welcome, ${name}</span>
+        <button onclick="logout()">Log out</button>
+      </div>
+    `;
+  }
+
+  function logout() {
+    localStorage.removeItem('loggedInUser');
+    location.reload();
+  }
+
+  window.onclick = function(event) {
+    if(event.target.classList.contains('modal')) event.target.style.display = "none";
+  }
+
+  // ===== MAP =====
+  function showMapModal() {
+    document.getElementById('mapModal').style.display = 'flex';
+
+    // Initialize map only once
+    if(!window.mapInitialized) {
+      window.mapInitialized = true;
+
+      const map = L.map('map').setView([17.3850, 78.4867], 12); // Center Hyderabad
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors'
+      }).addTo(map);
+
+      const stores = [
+        {name: "Beverage Hub - Banjara Hills", lat: 17.4239, lng: 78.4483},
+        {name: "Coffee Corner - Hitech City", lat: 17.4476, lng: 78.3910},
+        {name: "Shake & Brew - Secunderabad", lat: 17.4399, lng: 78.4983},
+        {name: "Refreshers Cafe - Gachibowli", lat: 17.4416, lng: 78.3809},
+        {name: "Smoothie Station - Jubilee Hills", lat: 17.4236, lng: 78.4102},
+        {name: "Chai Point - Ameerpet", lat: 17.4382, lng: 78.4486},
+        {name: "Hot Beverages - Kukatpally", lat: 17.4933, lng: 78.3899},
+        {name: "Cold Coffee Cafe - Madhapur", lat: 17.4495, lng: 78.3918},
+        {name: "Milkshake World - Marredpally", lat: 17.4524, lng: 78.4958},
+        {name: "Tea & Treats - Begumpet", lat: 17.4331, lng: 78.4744}
+      ];
+
+      stores.forEach(s => {
+        L.marker([s.lat, s.lng]).addTo(map).bindPopup(s.name);
+      });
+    }
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Cart</title>
+<style>
+  body { font-family: 'Poppins', sans-serif; padding: 30px; background:#fff8f0; }
+  h1 { text-align:center; color:#3c2a21; }
+  ul { list-style:none; padding:0; max-width:500px; margin:20px auto; }
+  li { padding:10px; margin:8px 0; background:#fff; border-radius:10px; box-shadow:0 2px 5px rgba(0,0,0,0.2); }
+  button { margin-top:20px; padding:10px 20px; border:none; border-radius:20px; background:#3c2a21; color:#fff; cursor:pointer; display:block; margin-left:auto; margin-right:auto; }
+</style>
+</head>
+<body>
+
+<h1>Your Cart</h1>
+<ul id="cartList"></ul>
+<button onclick="clearCart()">Clear Cart</button>
+
+<script>
+  const cartList = document.getElementById('cartList');
+  let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+  if(cart.length === 0){
+    cartList.innerHTML = "<li>Your cart is empty.</li>";
+  } else {
+    cart.forEach(item => {
+      let li = document.createElement('li');
+      li.textContent = item;
+      cartList.appendChild(li);
+    });
+  }
+
+  function clearCart(){
+    localStorage.removeItem('cart');
+    cartList.innerHTML = "<li>Your cart is empty.</li>";
+  }
+</script>
+
+</body>
+</html>

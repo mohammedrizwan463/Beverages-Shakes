@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lunch</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #fffdf9, #e5dcc5);
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Back Button */
+        .back-btn {
+            display: inline-block;
+            margin: 20px;
+            padding: 10px 22px;
+            background-color: #5a3825;
+            color: #fff;
+            border: none;
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 16px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background-color: #d4a373;
+            transform: scale(1.05);
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            padding: 40px 20px 10px;
+        }
+
+        header h1 {
+            font-size: 42px;
+            color: #4b2e22;
+            margin-bottom: 10px;
+        }
+
+        header h1 i {
+            color: #d4a373;
+        }
+
+        header p {
+            font-size: 18px;
+            color: #7a3e2b;
+            font-style: italic;
+        }
+
+        /* Grid Layout */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            padding: 50px 10%;
+            justify-items: center;
+        }
+
+        .menu-item {
+            background-color: #fff;
+            border-radius: 18px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            width: 260px;
+            text-align: center;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+        }
+
+        .menu-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .menu-item:hover img {
+            transform: scale(1.08);
+            filter: brightness(90%);
+        }
+
+        .menu-item h3 {
+            font-size: 20px;
+            margin: 12px 0 8px;
+            color: #4b2e22;
+        }
+
+        .menu-item p {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .menu-item i {
+            color: #d4a373;
+            font-size: 26px;
+            margin-top: 10px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 32px;
+            }
+
+            header p {
+                font-size: 16px;
+            }
+
+            .menu-item {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <a href="food.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i> Back</a>
+
+    <header>
+        <h1><i class="fa-solid fa-utensils"></i> Lunch</h1>
+        <p>Delicious mid-day meals to satisfy your hunger and energy.</p>
+    </header>
+
+    <section class="menu-grid">
+        <div class="menu-item">
+            <img src="f46.jpeg" alt="Crispy Grilled Cheese on Sourdough">
+            <i class="fa-solid fa-bread-slice"></i>
+            <h3>Crispy Grilled Cheese on Sourdough</h3>
+            <p>Golden brown sandwich stuffed with gooey melted cheese.</p>
+        </div>
+
+        <div class="menu-item">
+            <img src="f47.jpeg" alt="Spicy Falafel Pocket">
+            <i class="fa-solid fa-leaf"></i>
+            <h3>Spicy Falafel Pocket</h3>
+            <p>Falafel wrapped in pita with tangy sauce and fresh veggies.</p>
+        </div>
+
+        <div class="menu-item">
+            <img src="f48.jpeg" alt="Cheese & Fruit Protein Box">
+            <i class="fa-solid fa-cheese"></i>
+            <h3>Cheese & Fruit Protein Box</h3>
+            <p>A balanced mix of cheese, fruits, and nuts for quick energy.</p>
+        </div>
+
+        <div class="menu-item">
+            <img src="f49.jpeg" alt="Jalapeño Chicken Pocket">
+            <i class="fa-solid fa-drumstick-bite"></i>
+            <h3>Jalapeño Chicken Pocket</h3>
+            <p>Spicy grilled chicken with jalapeño mayo in a warm wrap.</p>
+        </div>
+    </section>
+
+</body>
+
+</html>

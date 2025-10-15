@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login | Beverages & Shakes</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #fffaf5, #e2d1c3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .login-container {
+      background-color: #fff;
+      padding: 40px 50px;
+      border-radius: 20px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+      text-align: center;
+      width: 350px;
+    }
+
+    .login-container h2 {
+      color: #3c2a21;
+      margin-bottom: 25px;
+      font-size: 28px;
+    }
+
+    .input-group {
+      margin-bottom: 20px;
+      text-align: left;
+    }
+
+    .input-group label {
+      display: block;
+      color: #555;
+      margin-bottom: 5px;
+      font-weight: 500;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 12px 15px;
+      border-radius: 10px;
+      border: 1.5px solid #ccc;
+      font-size: 15px;
+      transition: border-color 0.3s ease;
+    }
+
+    .input-group input:focus {
+      border-color: #a35d27;
+      outline: none;
+    }
+
+    .login-btn {
+      width: 100%;
+      background-color: #3c2a21;
+      color: #fff;
+      padding: 12px 0;
+      border: none;
+      border-radius: 25px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .login-btn:hover {
+      background-color: #d4a373;
+      transform: scale(1.05);
+    }
+
+    .links {
+      margin-top: 15px;
+      font-size: 14px;
+    }
+
+    .links a {
+      color: #a35d27;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .links a:hover {
+      text-decoration: underline;
+    }
+
+    .icon {
+      font-size: 50px;
+      color: #d4a373;
+      margin-bottom: 15px;
+    }
+
+    /* Success notification */
+    .toast {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background-color: #3c2a21;
+      color: #fff;
+      padding: 15px 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      opacity: 0;
+      transform: translateY(-20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+      z-index: 999;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="login-container">
+    <i class="fa-solid fa-mug-saucer icon"></i>
+    <h2>Welcome Back!</h2>
+    <form id="loginForm">
+      <div class="input-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="Enter your email" required />
+      </div>
+
+      <div class="input-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" placeholder="Enter your password" required />
+      </div>
+
+      <button type="submit" class="login-btn">Login</button>
+    </form>
+
+    <div class="links">
+      <p>Don't have an account? <a href="join.html">Join now</a></p>
+    </div>
+  </div>
+
+  <!-- Success toast -->
+  <div id="toast" class="toast">You have logged in successfully!</div>
+
+  <script>
+  document.getElementById("loginForm").addEventListener("submit", function (event) {
+    event.preventDefault(); // stop form refresh
+
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value.trim();
+
+    // Simple validation (replace with real auth later)
+    if (email !== "" && password !== "") {
+      const toast = document.getElementById("toast");
+      toast.classList.add("show");
+
+      // Hide the toast after 2.5s and redirect
+      setTimeout(() => {
+        toast.classList.remove("show");
+        window.location.href = "index.html"; // ✅ redirect to homepage now
+      }, 2500);
+    } else {
+      alert("Please enter valid details!");
+    }
+  });
+</script>
+
+</body>
+
+</html>
