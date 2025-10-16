@@ -44,6 +44,7 @@
     font-size: 16px;
     letter-spacing: 0.5px;
     transition: color 0.3s ease;
+    cursor: pointer;
   }
 
   .navbar-left a:hover { color: #006241; }
@@ -101,7 +102,7 @@
   .overlay { position: absolute; bottom: 0; left: 0; right: 0; background: rgba(0, 0, 0, 0.6); color: #fff; font-size: 20px; text-align: center; padding: 10px; opacity: 0; transition: opacity 0.4s ease; }
   .image-box:hover .overlay { opacity: 1; }
 
-  /* ===== MODAL ===== */
+  /* ===== MODALS (COMMON) ===== */
   .modal {
     display: none;
     position: fixed;
@@ -111,6 +112,7 @@
     background: rgba(0,0,0,0.5);
     justify-content: center;
     align-items: center;
+    animation: fadeIn 0.4s ease;
   }
 
   .modal-content {
@@ -160,9 +162,62 @@
     cursor: pointer;
   }
 
+  /* ===== REWARDS MODAL ===== */
+  #rewardsModal .modal-content {
+    width: 450px;
+    background: linear-gradient(135deg, #fef3e2, #fff);
+  }
+
+  .rewards-card {
+    background: #fff4e6;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+  }
+
+  .rewards-card i {
+    font-size: 40px;
+    color: #d4a373;
+  }
+
+  .rewards-card h3 {
+    margin: 10px 0;
+    color: #3c2a21;
+  }
+
+  /* ===== GIFT CARDS MODAL ===== */
+  #giftModal .modal-content {
+    width: 450px;
+    background: linear-gradient(135deg, #fff6f6, #fff);
+  }
+
+  .gift-cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+  }
+
+  .gift-cards img {
+    width: 120px;
+    height: 80px;
+    border-radius: 10px;
+    object-fit: cover;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+  }
+
+  .gift-cards img:hover { transform: scale(1.1); }
+
   /* ===== MAP ===== */
   #mapModal { display: none; }
   #map { height: 400px; width: 100%; border-radius: 15px; }
+
+  @keyframes fadeIn {
+    from {opacity: 0; transform: scale(0.95);}
+    to {opacity: 1; transform: scale(1);}
+  }
 
   @media (max-width: 768px) {
     .navbar { flex-direction: column; padding: 10px 20px; }
@@ -180,9 +235,8 @@
 <nav class="navbar">
   <div class="navbar-left">
     <img src="logo.png" alt="Logo" />
-    <a href="#">MENU</a>
-    <a href="#">REWARDS</a>
-    <a href="#">GIFT CARDS</a>
+    <a href="#" onclick="showRewards()">REWARDS</a>
+    <a href="#" onclick="showGiftCards()">GIFT CARDS</a>
   </div>
   <div class="navbar-right" id="navbar-right">
     <button onclick="showMapModal()"><i class="fa-solid fa-location-dot"></i> Find a store</button>
@@ -245,6 +299,37 @@ smoothies made with real fruits and natural ingredients.
   </div>
 </div>
 
+<!-- REWARDS MODAL -->
+<div id="rewardsModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal('rewardsModal')">&times;</span>
+    <div class="icon"><i class="fa-solid fa-star"></i></div>
+    <h2>Star Rewards Program 🌟</h2>
+    <div class="rewards-card">
+      <i class="fa-solid fa-mug-hot"></i>
+      <h3>Earn Points with Every Sip!</h3>
+      <p>Collect stars on every purchase and redeem them for free beverages, snacks, and special offers.</p>
+    </div>
+    <button onclick="showJoinModal()">Join the Rewards Club</button>
+  </div>
+</div>
+
+<!-- GIFT CARDS MODAL -->
+<div id="giftModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal('giftModal')">&times;</span>
+    <div class="icon"><i class="fa-solid fa-gift"></i></div>
+    <h2>Gift Happiness 🎁</h2>
+    <p>Surprise someone special with a beverage gift card! Perfect for birthdays, celebrations, or a coffee treat.</p>
+    <div class="gift-cards">
+      <img src="card1.png" alt="Gift Card 1" />
+      <img src="card2.png" alt="Gift Card 2" />
+      <img src="card3.png"Gift Card 3" />
+    </div>
+    <button onclick="alert('Your digital gift card link has been generated! 🎉')">Send a Gift</button>
+  </div>
+</div>
+
 <!-- MAP MODAL -->
 <div id="mapModal" class="modal">
   <div class="modal-content" style="width:90%; max-width:800px;">
@@ -257,8 +342,6 @@ smoothies made with real fruits and natural ingredients.
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
   const navbarRight = document.getElementById('navbar-right');
-
-  // Load accounts from localStorage
   let accounts = JSON.parse(localStorage.getItem('accounts')) || [];
 
   window.onload = () => {
@@ -268,17 +351,18 @@ smoothies made with real fruits and natural ingredients.
 
   function showLoginModal() { document.getElementById('loginModal').style.display = 'flex'; }
   function showJoinModal() { document.getElementById('joinModal').style.display = 'flex'; }
-  function closeModal(modalId) { document.getElementById(modalId).style.display = 'none'; }
+  function showRewards() { document.getElementById('rewardsModal').style.display = 'flex'; }
+  function showGiftCards() { document.getElementById('giftModal').style.display = 'flex'; }
+  function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 
   function joinUser() {
     const name = document.getElementById('joinName').value.trim();
     const email = document.getElementById('joinEmail').value.trim();
     const password = document.getElementById('joinPassword').value.trim();
-
     if(!name || !email || !password) { alert("Please fill all fields."); return; }
 
-    const exists = accounts.find(a => a.name === name || a.email === email);
-    if(exists) { alert("Account with this name or email already exists."); return; }
+    const exists = accounts.find(a => a.email === email);
+    if(exists) { alert("Account already exists."); return; }
 
     accounts.push({name, email, password});
     localStorage.setItem('accounts', JSON.stringify(accounts));
@@ -291,16 +375,13 @@ smoothies made with real fruits and natural ingredients.
   function loginUser() {
     const email = document.getElementById('loginEmail').value.trim();
     const password = document.getElementById('loginPassword').value.trim();
-
     const user = accounts.find(a => a.email === email && a.password === password);
-    if(user){
+    if(user) {
       localStorage.setItem('loggedInUser', user.name);
       showAccount(user.name);
       closeModal('loginModal');
-      alert("Logged in successfully!");
-    } else {
-      alert("Invalid email or password.");
-    }
+      alert("Welcome back, " + user.name + "!");
+    } else alert("Invalid email or password.");
   }
 
   function showAccount(name) {
@@ -308,8 +389,7 @@ smoothies made with real fruits and natural ingredients.
       <div class="account-info">
         <span>Welcome, ${name}</span>
         <button onclick="logout()">Log out</button>
-      </div>
-    `;
+      </div>`;
   }
 
   function logout() {
@@ -317,44 +397,21 @@ smoothies made with real fruits and natural ingredients.
     location.reload();
   }
 
-  window.onclick = function(event) {
-    if(event.target.classList.contains('modal')) event.target.style.display = "none";
-  }
-
   // ===== MAP =====
   function showMapModal() {
     document.getElementById('mapModal').style.display = 'flex';
-
-    // Initialize map only once
     if(!window.mapInitialized) {
       window.mapInitialized = true;
-
-      const map = L.map('map').setView([17.3850, 78.4867], 12); // Center Hyderabad
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; OpenStreetMap contributors'
-      }).addTo(map);
-
+      const map = L.map('map').setView([17.3850, 78.4867], 12);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
       const stores = [
-        {name: "Beverage Hub - Banjara Hills", lat: 17.4239, lng: 78.4483},
-        {name: "Coffee Corner - Hitech City", lat: 17.4476, lng: 78.3910},
-        {name: "Shake & Brew - Secunderabad", lat: 17.4399, lng: 78.4983},
-        {name: "Refreshers Cafe - Gachibowli", lat: 17.4416, lng: 78.3809},
-        {name: "Smoothie Station - Jubilee Hills", lat: 17.4236, lng: 78.4102},
-        {name: "Chai Point - Ameerpet", lat: 17.4382, lng: 78.4486},
-        {name: "Hot Beverages - Kukatpally", lat: 17.4933, lng: 78.3899},
-        {name: "Cold Coffee Cafe - Madhapur", lat: 17.4495, lng: 78.3918},
-        {name: "Milkshake World - Marredpally", lat: 17.4524, lng: 78.4958},
-        {name: "Tea & Treats - Begumpet", lat: 17.4331, lng: 78.4744}
+        {name: "Beverage Hub - Banjara Hills", lat: 17.412, lon: 78.442},
+        {name: "Coffee Craft - Jubilee Hills", lat: 17.428, lon: 78.412},
+        {name: "Brew Spot - Gachibowli", lat: 17.440, lon: 78.348},
       ];
-
-      stores.forEach(s => {
-        L.marker([s.lat, s.lng]).addTo(map).bindPopup(s.name);
-      });
+      stores.forEach(s => L.marker([s.lat, s.lon]).addTo(map).bindPopup(`<b>${s.name}</b>`));
     }
   }
 </script>
 </body>
 </html>
-
-
-

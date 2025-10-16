@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Egg, Pesto & Mozzarella Sandwich | Starbucks</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #1e3932;
+      color: #fff;
+    }
+
+    .container {
+      max-width: 480px;
+      margin: auto;
+      background-color: #1e3932;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .back-btn {
+      display: inline-block;
+      color: #fff;
+      background: #00754a;
+      padding: 10px 20px;
+      border-radius: 25px;
+      text-decoration: none;
+      font-weight: 600;
+      margin: 15px 0;
+      transition: background 0.3s;
+    }
+
+    .back-btn:hover {
+      background: #005f3c;
+    }
+
+    img {
+      width: 180px;
+      margin: 20px 0;
+      border-radius: 12px;
+    }
+
+    h1 {
+      font-size: 24px;
+      margin: 10px 0 5px;
+    }
+
+    p {
+      color: #b2beb5;
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
+
+    .add-button {
+      display: block;
+      width: 100%;
+      padding: 15px;
+      background: #00754a;
+      color: #fff;
+      font-weight: 600;
+      border: none;
+      border-radius: 30px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s;
+      margin-top: 20px;
+    }
+
+    .add-button:hover {
+      background: #005f3c;
+    }
+
+    .order-form {
+      display: none;
+      background: #2a4a43;
+      border-radius: 12px;
+      padding: 20px;
+      margin-top: 20px;
+      text-align: left;
+    }
+
+    .order-form label {
+      display: block;
+      margin-top: 10px;
+      font-weight: 600;
+      font-size: 15px;
+    }
+
+    .order-form input,
+    .order-form textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 8px;
+      border: none;
+      font-size: 15px;
+    }
+
+    .place-order {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      background: #00754a;
+      color: #fff;
+      font-weight: 600;
+      border: none;
+      border-radius: 30px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 15px;
+    }
+
+    .confirmation-box {
+      display: none;
+      background: #2a4a43;
+      border-radius: 15px;
+      padding: 25px;
+      margin-top: 25px;
+      text-align: center;
+      animation: fadeIn 0.5s ease-in-out;
+    }
+
+    .confirmation-box h2 {
+      color: #fff;
+      margin-bottom: 10px;
+    }
+
+    .confirmation-box p {
+      color: #b2beb5;
+      font-size: 15px;
+      margin-bottom: 20px;
+    }
+
+    .continue-btn {
+      background: #00754a;
+      color: #fff;
+      border: none;
+      border-radius: 30px;
+      padding: 12px 25px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .continue-btn:hover {
+      background: #005f3c;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+  </style>
+</head>
+
+<body>
+  <a href="breakfast.html" class="back-btn">← Back to Menu</a>
+  <div class="container">
+
+    <img src="f38.jpeg" alt="Egg, Pesto & Mozzarella Sandwich" />
+    <h1>Egg, Pesto & Mozzarella Sandwich</h1>
+    <p>270 calories</p>
+
+    <button class="add-button">Add to Order</button>
+
+    <div class="order-form" id="orderForm">
+      <h2>Place Your Order</h2>
+      <label for="name">Full Name</label>
+      <input type="text" id="name" placeholder="Enter your name" />
+
+      <label for="phone">Phone Number</label>
+      <input type="text" id="phone" placeholder="Enter your phone number" />
+
+      <label for="address">Delivery Address</label>
+      <textarea id="address" rows="3" placeholder="Enter your address"></textarea>
+
+      <button class="place-order">Confirm Order</button>
+    </div>
+
+    <div class="confirmation-box" id="confirmationBox">
+      <h2>🎉 Order Confirmed!</h2>
+      <p id="confirmMessage"></p>
+      <button class="continue-btn" onclick="goHome()">Continue Shopping</button>
+    </div>
+
+  </div>
+
+  <script>
+    const addButton = document.querySelector(".add-button");
+    const orderForm = document.getElementById("orderForm");
+    const confirmationBox = document.getElementById("confirmationBox");
+    const confirmMessage = document.getElementById("confirmMessage");
+
+    addButton.addEventListener("click", () => {
+      orderForm.style.display = "block";
+      addButton.style.display = "none";
+    });
+
+    document.querySelector(".place-order").addEventListener("click", () => {
+      const name = document.getElementById("name").value.trim();
+      const phone = document.getElementById("phone").value.trim();
+      const address = document.getElementById("address").value.trim();
+
+      if (!name || !phone || !address) {
+        alert("Please fill out all fields before confirming your order.");
+        return;
+      }
+
+      orderForm.style.display = "none";
+      confirmationBox.style.display = "block";
+      confirmMessage.innerHTML = `
+        Hello <strong>${name}</strong>, your <strong>Egg, Pesto & Mozzarella Sandwich</strong>
+        order has been confirmed.<br><br>It will be delivered to:<br><em>${address}</em>
+      `;
+    });
+
+    function goHome() {
+      window.location.href = "index.html";
+    }
+  </script>
+</body>
+</html>

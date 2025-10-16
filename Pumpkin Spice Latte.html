@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pumpkin Spice Latte| Starbucks</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #1e3932;
+            color: #fff;
+        }
+
+        .container {
+            max-width: 480px;
+            margin: auto;
+            background-color: #1e3932;
+            padding: 20px;
+            text-align: center;
+        }
+
+        img {
+            width: 140px;
+            margin: 20px 0;
+            border-radius: 12px;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin: 10px 0 5px;
+        }
+
+        p {
+            color: #b2beb5;
+            font-size: 16px;
+            margin: 5px 0 20px;
+        }
+
+        .sizes {
+            display: flex;
+            justify-content: space-around;
+            background: #2a4a43;
+            border-radius: 10px;
+            padding: 10px;
+            margin: 20px 0;
+        }
+
+        .size-option {
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .size-option:hover, .size-option.active {
+            background: #00754a;
+        }
+
+        .section-title {
+            font-weight: 600;
+            text-align: left;
+            margin: 20px 0 10px;
+            font-size: 18px;
+        }
+
+        .options {
+            background: #2a4a43;
+            border-radius: 12px;
+            padding: 15px;
+            text-align: left;
+        }
+
+        .option {
+            margin: 10px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .option span {
+            color: #fff;
+            font-size: 15px;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 25px 20px;
+            margin-top: 40px;
+            border-top: 1px solid #3d5f58;
+            color: #b2beb5;
+            font-size: 14px;
+        }
+
+        .add-button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background: #00754a;
+            color: #fff;
+            font-weight: 600;
+            border: none;
+            border-radius: 30px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-top: 20px;
+        }
+
+        .add-button:hover {
+            background: #005f3c;
+        }
+
+        /* Order form styling */
+        .order-form {
+            display: none;
+            background: #2a4a43;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .order-form label {
+            display: block;
+            margin-top: 10px;
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        .order-form input, .order-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 8px;
+            border: none;
+            font-size: 15px;
+        }
+
+        .place-order {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background: #00754a;
+            color: #fff;
+            font-weight: 600;
+            border: none;
+            border-radius: 30px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+
+        /* Confirmation box */
+        .confirmation-box {
+            display: none;
+            background: #2a4a43;
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 25px;
+            text-align: center;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .confirmation-box h2 {
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        .confirmation-box p {
+            color: #b2beb5;
+            font-size: 15px;
+            margin-bottom: 20px;
+        }
+
+        .continue-btn {
+            background: #00754a;
+            color: #fff;
+            border: none;
+            border-radius: 30px;
+            padding: 12px 25px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .continue-btn:hover {
+            background: #005f3c;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        @media (max-width: 500px) {
+            h1 { font-size: 20px; }
+            .sizes { flex-direction: column; gap: 10px; }
+        }
+        
+.back-btn {
+    display: inline-block;
+    color: #fff;
+    background: #00754a;
+    padding: 10px 20px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: 600;
+    margin-bottom: 20px;
+    transition: background 0.3s;
+}
+.back-btn:hover {
+    background: #005f3c;
+}
+
+    </style>
+</head>
+<body>
+    <a href="drinks.html" class="back-btn">← Back to Menu</a>
+
+
+    <div class="container">
+        <img src="f20.jpeg" alt="Pumpkin Spice Latte">
+        
+        <h1>Pumpkin Spice Latte</h1>
+        <p>390 calories</p>
+
+        <div class="sizes">
+            <div class="size-option">Tall<br><small>12 fl oz</small></div>
+            <div class="size-option">Grande<br><small>16 fl oz</small></div>
+            <div class="size-option active">Venti<br><small>24 fl oz</small></div>
+        </div>
+
+        <div class="section-title">What's included</div>
+<div class="options">
+  <div class="option"><span>Milk</span> <span>Steamed 2% Milk</span></div>
+  <div class="option"><span>Espresso</span> <span>Signature Espresso Shots</span></div>
+  <div class="option"><span>Flavors</span> <span>Pumpkin Spice Syrup</span></div>
+  <div class="option"><span>Topping</span> <span>Whipped Cream & Pumpkin Spice Drizzle</span></div>
+  <div class="option"><span>Add-ins</span> <span>Optional Sugar or Sweetener</span>
+  </div>
+
+
+        <button class="add-button">Add to Order</button>
+
+        <!-- Order Form Section -->
+        <div class="order-form" id="orderForm">
+            <h2>Place Your Order</h2>
+            <label for="name">Full Name</label>
+            <input type="text" id="name" placeholder="Enter your name">
+
+            <label for="phone">Phone Number</label>
+            <input type="text" id="phone" placeholder="Enter your phone number">
+
+            <label for="address">Delivery Address</label>
+            <textarea id="address" rows="3" placeholder="Enter your address"></textarea>
+
+            <label for="sizeSelected">Selected Size</label>
+            <input type="text" id="sizeSelected" readonly>
+
+            <button class="place-order">Confirm Order</button>
+        </div>
+
+        <!-- Confirmation Box -->
+        <div class="confirmation-box" id="confirmationBox">
+            <h2>🎉 Order Confirmed!</h2>
+            <p id="confirmMessage"></p>
+            <button class="continue-btn" onclick="goHome()">Continue Shopping</button>
+        </div>
+
+        <div class="footer">
+            <p><strong>Protein-Packed. Vanilla Rich.</strong><br>
+            With 29g of protein per grande, this handcrafted iced latte blends bold, signature espresso with protein-boosted milk and sweet vanilla flavor for a smooth, delicious beverage.</p>
+        </div>
+    </div>
+
+    <script>
+        // Size selection
+        const sizeOptions = document.querySelectorAll('.size-option');
+        const sizeInput = document.getElementById('sizeSelected');
+
+        sizeOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                sizeOptions.forEach(opt => opt.classList.remove('active'));
+                option.classList.add('active');
+                sizeInput.value = option.textContent.trim();
+            });
+        });
+
+        // Add to order button
+        const addButton = document.querySelector('.add-button');
+        const orderForm = document.getElementById('orderForm');
+        const confirmationBox = document.getElementById('confirmationBox');
+        const confirmMessage = document.getElementById('confirmMessage');
+
+        addButton.addEventListener('click', () => {
+            orderForm.style.display = 'block';
+            const activeSize = document.querySelector('.size-option.active');
+            sizeInput.value = activeSize ? activeSize.textContent.trim() : '';
+            addButton.style.display = 'none';
+        });
+
+        // Confirm order logic
+        document.querySelector('.place-order').addEventListener('click', () => {
+            const name = document.getElementById('name').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const address = document.getElementById('address').value.trim();
+            const size = sizeInput.value;
+
+            if (!name || !phone || !address) {
+                alert('Please fill out all fields before confirming your order.');
+                return;
+            }
+
+            // Hide form, show confirmation box
+            orderForm.style.display = 'none';
+            confirmationBox.style.display = 'block';
+            confirmMessage.innerHTML = `
+                Hello <strong>${name}</strong>, your <strong>${size}</strong> Iced Vanilla Protein Latte
+                has been confirmed.<br><br>It will be delivered to:<br><em>${address}</em>
+            `;
+        });
+
+        // Continue Shopping button
+        function goHome() {
+            // Replace with your homepage link
+            window.location.href = "index.html";  
+        }
+    </script>
+
+</body>
+</html>
